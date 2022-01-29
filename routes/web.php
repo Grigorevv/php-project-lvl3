@@ -37,9 +37,9 @@ Route::post('/', function (Request $request) {
 $urls = DB::table('urls')->get();
 //$currentUrl = DB::table('urls')->where('name', $url['name'])->first();
 return view('test', ['urls' => $urls]);
-//$id = 1;
-//$u = route('sites');
-//return redirect($u.'/'.$id, ['urls' => $urls]);
+$id = 1;
+$u = route('sites');
+return redirect($u.'/'.$id, ['urls' => $urls]);
 });
 
 
