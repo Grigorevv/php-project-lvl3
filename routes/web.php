@@ -40,7 +40,10 @@ return redirect($u.'/'.$id, ['urls' => $urls]);
 
 
 Route::get('/urls', function () {
+    
+    print_r('1');
     $urls = DB::table('urls')->get();
+    print_r('2');
     return view('sites', ['urls' => $urls]);
 
 })->name('sites');
