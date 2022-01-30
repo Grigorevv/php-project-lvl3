@@ -25,11 +25,12 @@ Route::post('/', function (Request $request) {
     $url = $request->input('url');
     var_dump($url);
     print_r('2');
-    
+    DB::insert('insert into urls (name) values (?)', ['google.com']);
+    /*
     DB::table('urls')->insert([
     'name' => $url['name'],
     'created_at' => '26.01.22'
-]);
+]);*/
 print_r('3');
 $urls = DB::table('urls')->get();
 $currentUrl = DB::table('urls')->where('name', $url['name'])->first();
