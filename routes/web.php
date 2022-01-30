@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::post('/', function (Request $request) {
     print_r('1');
     $url = $request->input('url');
+    var_dump($url);
     print_r('2');
     
     DB::table('urls')->insert([
