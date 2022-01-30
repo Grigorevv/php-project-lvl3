@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 
 
 Route::get('/', function () {
@@ -27,13 +21,15 @@ Route::get('/', function () {
 });
 
 Route::post('/', function (Request $request) {
+    print_r('1');
     $url = $request->input('url');
-
+    print_r('2');
     
     DB::table('urls')->insert([
     'name' => $url['name'],
     'created_at' => '26.01.22'
 ]);
+print_r('3');
 $urls = DB::table('urls')->get();
 $currentUrl = DB::table('urls')->where('name', $url['name'])->first();
 return view('test', ['urls' => $urls]);
