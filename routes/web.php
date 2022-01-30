@@ -45,7 +45,10 @@ return redirect($u.'/'.$id, ['urls' => $urls]);
 
 Route::get('/urls', function () {
     $urls = DB::table('urls')->get();
-    return view('sites', ['urls' => $urls]);
+
+    //return view('sites', ['urls' => $urls]);
+    return 'hi, Vik!';
+
 })->name('sites');
 
 
