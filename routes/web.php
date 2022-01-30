@@ -35,7 +35,7 @@ Route::post('/', function (Request $request) {
     'created_at' => '26.01.22'
 ]);
 $urls = DB::table('urls')->get();
-//$currentUrl = DB::table('urls')->where('name', $url['name'])->first();
+$currentUrl = DB::table('urls')->where('name', $url['name'])->first();
 return view('test', ['urls' => $urls]);
 $id = 1;
 $u = route('sites');
@@ -44,11 +44,8 @@ return redirect($u.'/'.$id, ['urls' => $urls]);
 
 
 Route::get('/urls', function () {
-
     $urls = DB::table('urls')->get();
-
     return view('sites', ['urls' => $urls]);
-   // return 'hi, Vik!';
 
 })->name('sites');
 
