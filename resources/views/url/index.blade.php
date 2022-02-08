@@ -13,24 +13,15 @@
                     <th>Код ответа</th>
                 </tr>
                 @foreach ($urls as $url)
-                 <!-- 
                 <tr>
-                    <td>1</td>
-                    <td><a href="https://php-l3-page-analyzer.herokuapp.com/urls/1">https://mail.ru</a></td>
-                    <td>2022-01-26 19:36:45 </td>
-                    <td>200</td>
-                </tr> -->
-                <tr>
-                <td>{{$url->id}}</td>
-                <td>{{$url->name}}</td>
-                <td>2022-01-26 19:36:45 </td>
-                <td>200</td>
+                <td>{{ $url->id }}</td>
+                <td><a href="{{ route('urls.show', ['url' => $url->id]) }}">{{ $url->name }}</a></td>
+                <td>{{ $url->created_at }}</td>  <!-- потом изменить на дату проверки -->
+                <td>???</td>
                 </tr>
                 @endforeach
             </table>
         </div>
     </div>
 </main>
-</body>
-</html>
 @endsection

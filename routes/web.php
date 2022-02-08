@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UrlController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,47 +17,12 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get('/', [PageController::class, 'home'])->name('home');;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::resource('urls', UrlController::class)->only([
+    'index', 'show', 'store'
+]);
 
-Route::post('/', function (Request $request) {
-    print_r('1');
-    $url = $request->input('url');
-    var_dump($url);
-    print_r('2');
-    DB::insert('insert into urls (name) values (?)', ['google.com']);
-    /*
-    DB::table('urls')->insert([
-    'name' => $url['name'],
-    'created_at' => '26.01.22'
-]);*/
-print_r('3');
-$urls = DB::table('urls')->get();
-$currentUrl = DB::table('urls')->where('name', $url['name'])->first();
-return view('test', ['urls' => $urls]);
-$id = 1;
-$u = route('sites');
-return redirect($u.'/'.$id, ['urls' => $urls]);
-});
-
-
-Route::get('/urls', function () {
-    
-    print_r('1');
-    $urls = DB::table('urls')->get();
-    print_r('2');
-    return view('sites', ['urls' => $urls]);
-
-})->name('sites');
-
-
-Route::get('/urls/{id}', function ($id) {
-
-    $urls = DB::table('urls')->get();
-    return view('site', ['urls' => $urls]);
-});
 
 
     

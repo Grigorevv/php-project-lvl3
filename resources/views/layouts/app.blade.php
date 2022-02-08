@@ -32,13 +32,10 @@
             </div>
         </nav>
         </header>
-
-
         <!-- main -->
         <div>
             @yield('content')
-
-    </div>
+        </div>
 
 </body>
 </html>
