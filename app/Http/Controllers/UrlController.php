@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Faker\Factory;
 
 
 use Illuminate\Http\Request;
@@ -35,43 +36,46 @@ class UrlController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data = $request->input('url');
-        $normalize = parse_url($data['name']);
-        $normUrl['name'] = "{$normalize['scheme']}://{$normalize['host']}";
-        $validator = Validator::make($normUrl, [
+        $validator = Validator::make(
+            $data, [
             'name' => 'required|url|max:255',
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return redirect()->route('home')
                 ->withErrors($validator)
                 ->withInput();
         }
-
-    //DB::insert('insert into urls (name, created_at) values (?, ?)', [$data['name'], Carbon::now()->toDateTimeString()]); // for heroku
-    $url = DB::table('urls')->where('name', $normUrl['name'])->first();
+       
+        $normalize = parse_url($data['name']);
+        $normUrl['name'] = "{$normalize['scheme']}://{$normalize['host']}";
+        //DB::insert('insert into urls (name, created_at) values (?, ?)', [$data['name'], Carbon::now()->toDateTimeString()]); // for heroku
+        $url = DB::table('urls')->where('name', $normUrl['name'])->first();
+        
     
-    if ($url) {
-        $request->session()->flash('message', 'Страница уже существует');
+        if ($url) {
+            $request->session()->flash('message', 'Страница уже существует');
+            return redirect()->route('urls.show', ['url' => $url->id]);
+        }
+
+        DB::table('urls')->insert(['name' => $normUrl['name'], 'created_at' => Carbon::now()->toDateTimeString()]);
+    
+        $url = DB::table('urls')->where('name', $normUrl['name'])->first();
+        $request->session()->flash('message', 'Страница успешно добавлена');
         return redirect()->route('urls.show', ['url' => $url->id]);
-    }
-
-    DB::table('urls')->insert(['name' => $normUrl['name'], 'created_at' => Carbon::now()->toDateTimeString()]);
-    
-    $url = DB::table('urls')->where('name', $normUrl['name'])->first();
-    $request->session()->flash('message', 'Страница успешно добавлена');
-    return redirect()->route('urls.show', ['url' => $url->id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)

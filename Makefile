@@ -26,7 +26,7 @@ log:
 	tail -f storage/logs/laravel.log
 
 test:
-	php artisan test
+	php artisan test 
 
 deploy:
 	git push heroku
@@ -36,3 +36,9 @@ lint:
 
 test-coverage:
 	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
+
+lint-fix:
+	composer phpcbf
+
+clear:
+	php artisan cache:clear

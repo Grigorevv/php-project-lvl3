@@ -17,12 +17,12 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/', [PageController::class, 'home'])->name('home');;
+Route::get('/', [PageController::class, 'home'])
+    ->name('home');;
 
-Route::resource('urls', UrlController::class)->only([
+Route::resource('urls', UrlController::class)->only(
+    [
     'index', 'show', 'store'
-]);
+    ]
+);
 
-
-
-    
