@@ -29,8 +29,7 @@ class UrlController extends Controller
      */
     public function create()
     {
-        //$article = new Article();
-        //return view('article.create', compact('article'));
+
     }
 
     /**
@@ -41,6 +40,7 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->input('url');
         $validator = Validator::make(
             $data, [
@@ -81,6 +81,7 @@ class UrlController extends Controller
     public function show($id)
     {
         $url = DB::table('urls')->find($id);
-        return view('url.show', ['url' => $url]);
+        $checks = DB::table('url_checks')->where('url_id', $id)->get();
+        return view('url.show', ['url' => $url, 'checks' => $checks]);
     }
 }

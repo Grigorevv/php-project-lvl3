@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UrlCheckController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +17,18 @@ use App\Http\Controllers\PageController;
 */
 
 Route::get('/', [PageController::class, 'home'])
-    ->name('home');;
+    ->name('home');
+
 
 Route::resource('urls', UrlController::class)->only(
     [
     'index', 'show', 'store'
     ]
 );
+
+Route::resource('urls.checks', UrlCheckController::class)->only(['store']);
+
+
+
+
 

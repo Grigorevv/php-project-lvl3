@@ -8,7 +8,7 @@
 
     <title>Анализатор страниц</title>
     <!-- Styles -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="min-vh-100 d-flex flex-column">
