@@ -18,6 +18,17 @@ class UrlControllerTest extends TestCase
             $table->string('name')->unique();
             $table->timestamps();
         });
+
+        Schema::create('url_checks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('url_id')->constrained('urls');
+            $table->integer('status_code')->nullable();
+            $table->string('h1')->nullable();
+            $table->text('title')->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+        }
+    );
     }
 
     public function testIndex()
@@ -50,6 +61,5 @@ class UrlControllerTest extends TestCase
         $response = $this->get(route('urls.show', ['url' => $this->id]));
         $response->assertOk();
     }
-
 }
 
