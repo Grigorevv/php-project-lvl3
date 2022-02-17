@@ -22,13 +22,8 @@ Route::get('/', [PageController::class, 'home'])
 
 Route::resource('urls', UrlController::class)->only(
     [
-    'index', 'show', 'store'
+        'index', 'show', 'store'
     ]
 );
 
 Route::resource('urls.checks', UrlCheckController::class)->only(['store']);
-
-
-
-
-

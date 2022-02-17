@@ -2,9 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-
 
 class PageControllerTest extends TestCase
 {
@@ -13,5 +11,4 @@ class PageControllerTest extends TestCase
         $response = $this->get(route('home'));
         $response->assertOk();
     }
-
 }

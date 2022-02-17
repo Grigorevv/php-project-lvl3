@@ -36,15 +36,15 @@
                 <th>h1</th>
                 <th>title</th>
                 <th>description</th>
-                <th>Дата создания</th>
+                <th>Дата проверки</th>
             </tr>
                 @foreach ($checks as $check)
                 <tr>
                 <td>{{ $check->id }}</td>
-                <th>???</th>
-                <th>???</th>
-                <th>???</th>
-                <th>???</th>
+                <th>{{ $check->status_code }}</th>
+                <th>{{ Str::limit($check->h1, 30) }}</th>
+                <th>{{ Str::limit($check->title, 30) }}</th>
+                <th>{{ Str::limit($check->description, 30) }}</th>
                 <td>{{ $check->created_at }}</td>
                 </tr>
                 @endforeach
@@ -52,3 +52,4 @@
     </div>
 </main>
 @endsection
+
