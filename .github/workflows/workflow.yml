@@ -17,6 +17,9 @@ jobs:
     - name: PHP Security Checker
       uses: StephaneBour/actions-php-security-checker@1.1
 
+      - name: Create DB and schemas
+      run: touch database/database.sqlite
+
     - name: Setup project
       run: make setup
 

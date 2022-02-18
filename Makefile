@@ -42,3 +42,4 @@ lint-fix:
 
 clear:
 	php artisan cache:clear
+
