@@ -5,18 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-use Faker\Factory;
-
-
 use Illuminate\Http\Request;
 
 class UrlController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $urls = DB::table('urls')->paginate(15);
@@ -29,24 +21,8 @@ class UrlController extends Controller
         return view('url.index', compact('urls', 'lastChecks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
         $data = $request->input('url');
         $validator = Validator::make(
             $data,
@@ -63,9 +39,9 @@ class UrlController extends Controller
 
         $normalize = parse_url($data['name']);
         $normUrl['name'] = "{$normalize['scheme']}://{$normalize['host']}";
-        //DB::insert('insert into urls (name, created_at) values (?, ?)', [$data['name'], Carbon::now()->toDateTimeString()]); // for heroku
+        /* DB::insert('insert into urls (name, created_at) values (?, ?)',
+       [$data['name'], Carbon::now()->toDateTimeString()]); // for heroku */
         $url = DB::table('urls')->where('name', $normUrl['name'])->first();
-
 
         if ($url) {
             $request->session()->flash('message', 'Страница уже существует');
@@ -79,12 +55,6 @@ class UrlController extends Controller
         return redirect()->route('urls.show', ['url' => $url->id]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $url = DB::table('urls')->find($id);

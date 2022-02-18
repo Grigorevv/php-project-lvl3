@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class UrlCheckControllerTest extends TestCase
 {
@@ -36,18 +37,26 @@ class UrlCheckControllerTest extends TestCase
     public function testStore()
     {
         $data = [
-            'name' => 'https://mail.ru',
-        ];
-        $id = DB::table('urls')->insertGetId($data);
-        $response = $this->post(route('urls.checks.store', $id));
-        $expectedData = [
-            'url_id' => $id,
-            //'status_code' => 200,
-            //'h1' => 'header',
-            //'title' => 'example',
-            // 'description' => 'description'
+            'name' => 'http://example.ru',
+            'created_at' => Carbon::now(),
         ];
 
+        $id = DB::table('urls')->insertGetId($data);
+
+        $content = '<h1>header</h1> 
+        <title>example</title> 
+        <meta name="description" content="description">';
+
+        Http::fake([$data['name'] => Http::response($content, 200)]);
+
+        $expectedData = [
+            'url_id' => $id,
+            'status_code' => 200,
+            'h1' => 'header',
+            'title' => 'example',
+            'description' => 'description'
+        ];
+        $response = $this->post(route('urls.checks.store', $id));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
         $this->assertDatabaseHas('url_checks', $expectedData);

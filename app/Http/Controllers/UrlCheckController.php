@@ -22,7 +22,12 @@ class UrlCheckController extends Controller
             $h1 = optional($document->first('h1'))->text();
             $title = optional($document->first('title'))->text();
             $description = optional($document->first('meta[name=description]'))->getAttribute('content');
-            DB::table('url_checks')->insert(['url_id' => $id, 'status_code' => $status, 'title' => $title, 'h1' => $h1, 'description' => $description, 'created_at' => Carbon::now()->toDateTimeString()]);
+            DB::table('url_checks')->insert([
+                'url_id' => $id, 'status_code' => $status,
+                'title' => $title, 'h1' => $h1,
+                'description' => $description,
+                'created_at' => Carbon::now()->toDateTimeString()
+            ]);
         } catch (HttpClientException $exception) {
             $request->session()->flash('message', $exception->getMessage());
         }
