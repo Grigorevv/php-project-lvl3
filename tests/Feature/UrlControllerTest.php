@@ -44,10 +44,10 @@ class UrlControllerTest extends TestCase
         $data = [
             'name' => 'https://mail.ru',
         ];
-        $this->id = DB::table('urls')->insertGetId($data);
+        $id = DB::table('urls')->insertGetId($data);
         $response = $this->post(route('urls.store'), ['url' => $data]);
-        $response->assertRedirect(route('urls.show', ['url' =>  $this->id]));
-        $response = $this->get(route('urls.show', ['url' => $this->id]));
+        $response->assertRedirect(route('urls.show', ['url' =>  $id]));
+        $response = $this->get(route('urls.show', ['url' => $id]));
         $this->assertDatabaseHas('urls', $data);
         $response->assertSessionHasNoErrors();
         $response->assertOk();
@@ -59,8 +59,8 @@ class UrlControllerTest extends TestCase
         $data = [
             'name' => 'https://mail.ru',
         ];
-        $this->id = DB::table('urls')->insertGetId($data);
-        $response = $this->get(route('urls.show', ['url' => $this->id]));
+        $id = DB::table('urls')->insertGetId($data);
+        $response = $this->get(route('urls.show', ['url' => $id]));
         $response->assertOk();
     }
 }

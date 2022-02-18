@@ -11,7 +11,7 @@ use Illuminate\Http\Client\HttpClientException;
 
 class UrlCheckController extends Controller
 {
-    public function store(Request $request, $id)
+    public function store(Request $request, int $id)
     {
         $url = DB::table('urls')->find($id);
 

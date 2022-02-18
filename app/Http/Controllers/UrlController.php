@@ -37,25 +37,27 @@ class UrlController extends Controller
                 ->withInput();
         }
 
-        $normalize = parse_url($data['name']);
-        $normUrl['name'] = "{$normalize['scheme']}://{$normalize['host']}";
+        $parsedUrl = parse_url($data['name']);
+        $normalizedUrl = strtolower("{$parsedUrl['scheme']}://{$parsedUrl['host']}");
         /* DB::insert('insert into urls (name, created_at) values (?, ?)',
        [$data['name'], Carbon::now()->toDateTimeString()]); // for heroku */
-        $url = DB::table('urls')->where('name', $normUrl['name'])->first();
+        $url = DB::table('urls')->where('name', $normalizedUrl)->first();
 
-        if ($url) {
+        if (is_null($url)) {
+            $id = DB::table('urls')->insertGetId([
+                'name' => $normalizedUrl,
+                'created_at' => Carbon::now()->toDateTimeString()
+            ]);
+            $request->session()->flash('message', 'Страница успешно добавлена');
+        } else {
+            $id = $url->id;
             $request->session()->flash('message', 'Страница уже существует');
-            return redirect()->route('urls.show', ['url' => $url->id]);
         }
 
-        DB::table('urls')->insert(['name' => $normUrl['name'], 'created_at' => Carbon::now()->toDateTimeString()]);
-
-        $url = DB::table('urls')->where('name', $normUrl['name'])->first();
-        $request->session()->flash('message', 'Страница успешно добавлена');
-        return redirect()->route('urls.show', ['url' => $url->id]);
+        return redirect()->route('urls.show', ['url' => $id]);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $url = DB::table('urls')->find($id);
         $checks = DB::table('url_checks')->where('url_id', $id)->orderBy('id', 'desc')->get();
