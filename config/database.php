@@ -71,7 +71,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-/*
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
@@ -86,7 +86,7 @@ return [
             'schema' => 'public',
             'sslmode' => 'disable',
         ],
-        */
+        /*
         
         'pgsql' => [
             'driver' => 'pgsql',
@@ -100,7 +100,7 @@ return [
             'schema' => 'public',
             'sslmode' => 'require',
         ],
-
+*/
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
