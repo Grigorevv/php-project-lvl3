@@ -1,25 +1,18 @@
-
 name: PHP CI
 
 on:
-  - push
-  - pull_request
+  pull_request:
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-versions: ['8.0']
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up PHP ${{ matrix.php-versions }}
+    - uses: actions/checkout@v1
+    - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php-versions }}
+        php-version: '8.0'
 
     - name: PHP Security Checker
       uses: StephaneBour/actions-php-security-checker@1.1
@@ -30,5 +23,13 @@ jobs:
     - name: Check lint
       run: make lint
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+    - name: Execute tests via PHPUnit
       run: make test
+    - name: Show test coverage
+      uses: paambaati/codeclimate-action@v2.6.0
+      env:
+         CC_TEST_REPORTER_ID: ${{ secrets.hummel }}
+      with:
+        coverageCommand: make test-coverage
+        coverageLocations: ${{ github.workplace }}/build/logs/clover.xml:clover
+        debug: true
