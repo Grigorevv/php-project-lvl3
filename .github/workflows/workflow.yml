@@ -28,7 +28,7 @@ jobs:
     - name: Show test coverage
       uses: paambaati/codeclimate-action@v2.6.0
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+         CC_TEST_REPORTER_ID: ${{ secrets.hummel }}
       with:
         coverageCommand: make test-coverage
         coverageLocations: ${{ github.workplace }}/build/logs/clover.xml:clover
