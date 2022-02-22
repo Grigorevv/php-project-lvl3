@@ -5,29 +5,35 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/7d615f8c4d7c64a7b57c/maintainability)](https://codeclimate.com/github/Grigorevv/php-project-lvl3/maintainability)
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/7d615f8c4d7c64a7b57c/test_coverage)](https://codeclimate.com/github/
-Grigorevv/php-project-lvl3/test_coverage)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/7d615f8c4d7c64a7b57c/test_coverage)](https://codeclimate.com/github/Grigorevv/php-project-lvl3/test_coverage)  
 
-Page analyzer
+### Page analyzer
 Check for free if sites can be used for SEO
 
-Demo
+### Demo
+https://grigorev.herokuapp.com/
 
-http://grigorev.herokuapp.com/
+### Requirements
 
+  * PHP ^7.4.0
+  * Composer
+  * SQLite for local
+  
+### Setup
 
-Requirements
+  ```sh
+  git clone https://github.com/Grigorevv/php-project-lvl3.git
+  ```
 
-PHP ^7.4.0
-Composer
-SQLite for local
+  ```sh
+  cd php-project-lvl3
+  ```
 
-Setup
+  ```sh
+  make setup
+  ```
+### Run
 
-git clone git@github.com:Grigorevv/php-project-lvl3.git
-cd php-project-lvl3
-make setup
-
-Run
-
-make start
+  ```sh
+  make start
+  ```
